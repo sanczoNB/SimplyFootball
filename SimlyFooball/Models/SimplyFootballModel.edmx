@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FootballDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EmployeesInClub">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="PlayerId" />
+          </Key>
+          <Property Name="TeamId" Type="bigint" Nullable="false" />
+          <Property Name="PlayerId" Type="bigint" Nullable="false" />
+          <Property Name="Salary" Type="money" Nullable="false" />
+          <Property Name="SignDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="Position" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NickName" Type="varchar" MaxLength="20" />
+          <Property Name="Country" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FondDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EmployeesInClub_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeesInClub">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeesInClub_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeesInClub">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FootballDbModelStoreContainer">
+          <EntitySet Name="EmployeesInClub" EntityType="Self.EmployeesInClub" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EmployeesInClub_Player" Association="Self.FK_EmployeesInClub_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeesInClub_Team" Association="Self.FK_EmployeesInClub_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FootballDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EmployeesInClub">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="PlayerId" />
+          </Key>
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="PlayerId" Type="Int64" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="SignDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_EmployeesInClub_Player" FromRole="EmployeesInClub" ToRole="Player" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_EmployeesInClub_Team" FromRole="EmployeesInClub" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Position" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EmployeesInClub" Relationship="Self.FK_EmployeesInClub_Player" FromRole="Player" ToRole="EmployeesInClub" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FondDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="EmployeesInClub" Relationship="Self.FK_EmployeesInClub_Team" FromRole="Team" ToRole="EmployeesInClub" />
+        </EntityType>
+        <Association Name="FK_EmployeesInClub_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeesInClub">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeesInClub_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeesInClub">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FootballDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EmployeesInClub" EntityType="Self.EmployeesInClub" />
+          <EntitySet Name="Player" EntityType="Self.Player" />
+          <EntitySet Name="Team" EntityType="Self.Team" />
+          <AssociationSet Name="FK_EmployeesInClub_Player" Association="Self.FK_EmployeesInClub_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeesInClub_Team" Association="Self.FK_EmployeesInClub_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FootballDbModelStoreContainer" CdmEntityContainer="FootballDbEntities">
+          <EntitySetMapping Name="EmployeesInClub">
+            <EntityTypeMapping TypeName="FootballDbModel.EmployeesInClub">
+              <MappingFragment StoreEntitySet="EmployeesInClub">
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Player">
+            <EntityTypeMapping TypeName="FootballDbModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Team">
+            <EntityTypeMapping TypeName="FootballDbModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="FondDate" ColumnName="FondDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
