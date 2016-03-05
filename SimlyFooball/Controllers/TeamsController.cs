@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using System.Web.Mvc;
+using SimlyFooball.DataAccess;
 using SimlyFooball.Models;
 
 namespace SimlyFooball.Controllers
 {
     public class TeamsController : Controller
     {
-        private readonly FootballDbEntities _db = new FootballDbEntities();
+       
+
+        private readonly TeamRepository _teamRepository = new TeamRepository();
 
         // GET: Teams
         public ActionResult Index()
         {
-            return View(_db.Team.ToList());
+            return View(_teamRepository.GetListOfAllTeams());
         }
 
         // GET: Teams/Details/5
@@ -27,7 +24,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = _db.Team.Find(id);
+            Team team = _teamRepository.GetTeamById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -50,8 +47,7 @@ namespace SimlyFooball.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Team.Add(team);
-                _db.SaveChanges();
+                _teamRepository.AddNewTeam(team);
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +61,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = _db.Team.Find(id);
+          Team team = _teamRepository.GetTeamById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -82,8 +78,7 @@ namespace SimlyFooball.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(team).State = EntityState.Modified;
-                _db.SaveChanges();
+                _teamRepository.SaveChangesInTeam(team);
                 return RedirectToAction("Index");
             }
             return View(team);
@@ -96,7 +91,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = _db.Team.Find(id);
+            Team team = _teamRepository.GetTeamById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -109,9 +104,7 @@ namespace SimlyFooball.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Team team = _db.Team.Find(id);
-            _db.Team.Remove(team);
-            _db.SaveChanges();
+            _teamRepository.RemoveTeam(id);
             return RedirectToAction("Index");
         }
 
@@ -119,7 +112,7 @@ namespace SimlyFooball.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _teamRepository.Dispose();
             }
             base.Dispose(disposing);
         }

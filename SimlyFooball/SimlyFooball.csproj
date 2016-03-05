@@ -161,10 +161,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeesInClubsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
+    <Compile Include="DataAccess\PlayerRepository.cs" />
+    <Compile Include="DataAccess\TeamRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -281,6 +284,11 @@
     <Content Include="Views\Players\Details.cshtml" />
     <Content Include="Views\Players\Edit.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
+    <Content Include="Views\EmployeesInClubs\Create.cshtml" />
+    <Content Include="Views\EmployeesInClubs\Delete.cshtml" />
+    <Content Include="Views\EmployeesInClubs\Details.cshtml" />
+    <Content Include="Views\EmployeesInClubs\Edit.cshtml" />
+    <Content Include="Views\EmployeesInClubs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

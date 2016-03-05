@@ -2,19 +2,20 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Web.Mvc;
+using SimlyFooball.DataAccess;
 using SimlyFooball.Models;
 
 namespace SimlyFooball.Controllers
 {
     public class PlayersController : Controller
     {
-        private FootballDbEntities db = new FootballDbEntities();
-
+        private readonly PlayerRepository _playerRepository = new PlayerRepository();
         // GET: Players
         public ActionResult Index()
         {
-            return View(db.Player.ToList());
+            return View(_playerRepository.GetAll());
         }
 
         // GET: Players/Details/5
@@ -24,7 +25,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Player player = db.Player.Find(id);
+            Player player = _playerRepository.GetById(id.Value);
             if (player == null)
             {
                 return HttpNotFound();
@@ -47,8 +48,7 @@ namespace SimlyFooball.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Player.Add(player);
-                db.SaveChanges();
+                _playerRepository.Add(player);
                 return RedirectToAction("Index");
             }
 
@@ -62,7 +62,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Player player = db.Player.Find(id);
+            Player player = _playerRepository.GetById(id.Value);
             if (player == null)
             {
                 return HttpNotFound();
@@ -79,8 +79,7 @@ namespace SimlyFooball.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(player).State = EntityState.Modified;
-                db.SaveChanges();
+                _playerRepository.Update(player);
                 return RedirectToAction("Index");
             }
             return View(player);
@@ -93,7 +92,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Player player = db.Player.Find(id);
+            Player player = _playerRepository.GetById(id.Value);
             if (player == null)
             {
                 return HttpNotFound();
@@ -106,9 +105,7 @@ namespace SimlyFooball.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Player player = db.Player.Find(id);
-            db.Player.Remove(player);
-            db.SaveChanges();
+           _playerRepository.Remove(id);
             return RedirectToAction("Index");
         }
 
@@ -116,7 +113,7 @@ namespace SimlyFooball.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _playerRepository.Dispose();
             }
             base.Dispose(disposing);
         }
