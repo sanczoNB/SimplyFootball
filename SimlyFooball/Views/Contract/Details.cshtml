@@ -1,4 +1,4 @@
-﻿@model SimlyFooball.Models.EmployeesInClub
+﻿@model SimlyFooball.Models.Contract
 
 @{
     ViewBag.Title = "Details";
@@ -19,14 +19,23 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SignDate)
+            @Html.DisplayNameFor(model => model.StartContractDate)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SignDate)
-        </dd>
+      <dd>
+        @Html.DisplayFor(model => model.StartContractDate)
+      </dd>
 
-        <dt>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.EndContractDate)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.EndContractDate)
+      </dd>
+
+      <dt>
             @Html.DisplayNameFor(model => model.Player.FirstName)
         </dt>
 

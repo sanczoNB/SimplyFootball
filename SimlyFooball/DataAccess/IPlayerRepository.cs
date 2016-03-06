@@ -1,9 +1,10 @@
-﻿using SimlyFooball.Models;
+﻿using System.Collections.Generic;
+using SimlyFooball.Models;
 
 namespace SimlyFooball.DataAccess
 {
-  interface IPlayerRepository : IRepository<Player>
+  public interface IPlayerRepository : IRepository<Player>
   {
-
+      List<Player> GetAviable();
   }
 }

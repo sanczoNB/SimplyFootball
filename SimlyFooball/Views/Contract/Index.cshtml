@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SimlyFooball.Models.EmployeesInClub>
+﻿@model IEnumerable<SimlyFooball.Models.Contract>
 
 @{
     ViewBag.Title = "Index";
@@ -14,9 +14,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Salary)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SignDate)
-        </th>
+      <th>
+        @Html.DisplayNameFor(model => model.StartContractDate)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.EndContractDate)
+      </th>
         <th>
             @Html.DisplayNameFor(model => model.Player.FirstName)
         </th>
@@ -31,9 +34,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Salary)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SignDate)
-        </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.StartContractDate)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.EndContractDate)
+      </td>
         <td>
             @Html.DisplayFor(modelItem => item.Player.FirstName)
         </td>

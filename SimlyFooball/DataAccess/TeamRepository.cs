@@ -11,17 +11,17 @@ namespace SimlyFooball.DataAccess
 
     public Team GetById(long id)
     {
-      return _db.Team.FirstOrDefault(x => x.Id == id);
+      return _db.Teams.FirstOrDefault(x => x.Id == id);
     }
 
     public List<Team> GetAll()
     {
-      return _db.Team.ToList();
+      return _db.Teams.ToList();
     }
 
     public void Add(Team team)
     {
-      _db.Team.Add(team);
+      _db.Teams.Add(team);
       _db.SaveChanges();
     }
 
@@ -33,8 +33,8 @@ namespace SimlyFooball.DataAccess
 
     public void Remove(long id)
     {
-      Team team = _db.Team.Find(id);
-      _db.Team.Remove(team);
+      Team team = _db.Teams.Find(id);
+      _db.Teams.Remove(team);
       _db.SaveChanges();
     }
 

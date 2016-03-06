@@ -12,12 +12,13 @@ namespace SimlyFooball.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeesInClub
+    public partial class Contract
     {
         public long TeamId { get; set; }
         public long PlayerId { get; set; }
         public decimal Salary { get; set; }
-        public System.DateTime SignDate { get; set; }
+        public System.DateTime StartContractDate { get; set; }
+        public Nullable<System.DateTime> EndContractDate { get; set; }
     
         public virtual Player Player { get; set; }
         public virtual Team Team { get; set; }

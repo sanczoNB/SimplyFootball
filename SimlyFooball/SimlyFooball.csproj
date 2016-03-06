@@ -161,18 +161,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EmployeesInClubsController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
+    <Compile Include="DataAccess\ContractRepository.cs" />
+    <Compile Include="DataAccess\IContractRepository.cs" />
+    <Compile Include="DataAccess\IPlayerRepository.cs" />
+    <Compile Include="DataAccess\IRepository.cs" />
+    <Compile Include="DataAccess\ITeamRepository.cs" />
     <Compile Include="DataAccess\PlayerRepository.cs" />
     <Compile Include="DataAccess\TeamRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EmployeesInClub.cs">
+    <Compile Include="Models\Contract.cs">
       <DependentUpon>SimplyFootballModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -284,11 +289,11 @@
     <Content Include="Views\Players\Details.cshtml" />
     <Content Include="Views\Players\Edit.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
-    <Content Include="Views\EmployeesInClubs\Create.cshtml" />
-    <Content Include="Views\EmployeesInClubs\Delete.cshtml" />
-    <Content Include="Views\EmployeesInClubs\Details.cshtml" />
-    <Content Include="Views\EmployeesInClubs\Edit.cshtml" />
-    <Content Include="Views\EmployeesInClubs\Index.cshtml" />
+    <Content Include="Views\Contract\Create.cshtml" />
+    <Content Include="Views\Contract\Delete.cshtml" />
+    <Content Include="Views\Contract\Details.cshtml" />
+    <Content Include="Views\Contract\Edit.cshtml" />
+    <Content Include="Views\Contract\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

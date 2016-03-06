@@ -14,17 +14,17 @@ namespace SimlyFooball.DataAccess
 
     public Player GetById(long id)
     {
-      return _db.Player.FirstOrDefault(x => x.Id == id);
+      return _db.Players.FirstOrDefault(x => x.Id == id);
     }
 
     public List<Player> GetAll()
     {
-      return _db.Player.ToList();
+      return _db.Players.ToList();
     }
 
     public void Add(Player player)
     {
-      _db.Player.Add(player);
+      _db.Players.Add(player);
       _db.SaveChanges();
     }
 
@@ -36,8 +36,8 @@ namespace SimlyFooball.DataAccess
 
     public void Remove(long id)
     {
-      Player player = _db.Player.Find(id);
-      _db.Player.Remove(player);
+      Player player = _db.Players.Find(id);
+      _db.Players.Remove(player);
       _db.SaveChanges();
     }
 
@@ -45,8 +45,10 @@ namespace SimlyFooball.DataAccess
     {
       _db.Dispose();
     }
-   
 
-
+    public List<Player> GetAviable()
+    {
+      return _db.Players.Where(p => p.Contracts.All(c => c.StartContractDate != null)).ToList();
+    }
   }
 }

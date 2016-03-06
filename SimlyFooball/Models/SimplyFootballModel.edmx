@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="FootballDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="EmployeesInClub">
+        <EntityType Name="Contract">
           <Key>
             <PropertyRef Name="TeamId" />
             <PropertyRef Name="PlayerId" />
@@ -13,7 +13,8 @@
           <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="PlayerId" Type="bigint" Nullable="false" />
           <Property Name="Salary" Type="money" Nullable="false" />
-          <Property Name="SignDate" Type="date" Nullable="false" />
+          <Property Name="StartContractDate" Type="date" Nullable="false" />
+          <Property Name="EndContractDate" Type="date" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -38,39 +39,39 @@
         </EntityType>
         <Association Name="FK_EmployeesInClub_Player">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Player">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="EmployeesInClub">
+            <Dependent Role="Contract">
               <PropertyRef Name="PlayerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmployeesInClub_Team">
           <End Role="Team" Type="Self.Team" Multiplicity="1" />
-          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="EmployeesInClub">
+            <Dependent Role="Contract">
               <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FootballDbModelStoreContainer">
-          <EntitySet Name="EmployeesInClub" EntityType="Self.EmployeesInClub" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_EmployeesInClub_Player" Association="Self.FK_EmployeesInClub_Player">
             <End Role="Player" EntitySet="Player" />
-            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+            <End Role="Contract" EntitySet="Contract" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeesInClub_Team" Association="Self.FK_EmployeesInClub_Team">
             <End Role="Team" EntitySet="Team" />
-            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+            <End Role="Contract" EntitySet="Contract" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -78,7 +79,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FootballDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="EmployeesInClub">
+        <EntityType Name="Contract">
           <Key>
             <PropertyRef Name="TeamId" />
             <PropertyRef Name="PlayerId" />
@@ -86,9 +87,10 @@
           <Property Name="TeamId" Type="Int64" Nullable="false" />
           <Property Name="PlayerId" Type="Int64" Nullable="false" />
           <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="SignDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_EmployeesInClub_Player" FromRole="EmployeesInClub" ToRole="Player" />
-          <NavigationProperty Name="Team" Relationship="Self.FK_EmployeesInClub_Team" FromRole="EmployeesInClub" ToRole="Team" />
+          <Property Name="StartContractDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndContractDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_EmployeesInClub_Player" FromRole="Contract" ToRole="Player" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_EmployeesInClub_Team" FromRole="Contract" ToRole="Team" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -99,7 +101,7 @@
           <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Position" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="EmployeesInClub" Relationship="Self.FK_EmployeesInClub_Player" FromRole="Player" ToRole="EmployeesInClub" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_EmployeesInClub_Player" FromRole="Player" ToRole="Contract" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -111,43 +113,43 @@
           <Property Name="Country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FondDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="EmployeesInClub" Relationship="Self.FK_EmployeesInClub_Team" FromRole="Team" ToRole="EmployeesInClub" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_EmployeesInClub_Team" FromRole="Team" ToRole="Contract" />
         </EntityType>
         <Association Name="FK_EmployeesInClub_Player">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Player">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="EmployeesInClub">
+            <Dependent Role="Contract">
               <PropertyRef Name="PlayerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmployeesInClub_Team">
           <End Role="Team" Type="Self.Team" Multiplicity="1" />
-          <End Role="EmployeesInClub" Type="Self.EmployeesInClub" Multiplicity="*" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="EmployeesInClub">
+            <Dependent Role="Contract">
               <PropertyRef Name="TeamId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FootballDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="EmployeesInClub" EntityType="Self.EmployeesInClub" />
-          <EntitySet Name="Player" EntityType="Self.Player" />
-          <EntitySet Name="Team" EntityType="Self.Team" />
+          <EntitySet Name="Contracts" EntityType="Self.Contract" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
           <AssociationSet Name="FK_EmployeesInClub_Player" Association="Self.FK_EmployeesInClub_Player">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Contract" EntitySet="Contracts" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeesInClub_Team" Association="Self.FK_EmployeesInClub_Team">
-            <End Role="Team" EntitySet="Team" />
-            <End Role="EmployeesInClub" EntitySet="EmployeesInClub" />
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Contract" EntitySet="Contracts" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -156,17 +158,18 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FootballDbModelStoreContainer" CdmEntityContainer="FootballDbEntities">
-          <EntitySetMapping Name="EmployeesInClub">
-            <EntityTypeMapping TypeName="FootballDbModel.EmployeesInClub">
-              <MappingFragment StoreEntitySet="EmployeesInClub">
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="FootballDbModel.Contract">
+              <MappingFragment StoreEntitySet="Contract">
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
                 <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+                <ScalarProperty Name="StartContractDate" ColumnName="StartContractDate" />
+                <ScalarProperty Name="EndContractDate" ColumnName="EndContractDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Player">
+          <EntitySetMapping Name="Players">
             <EntityTypeMapping TypeName="FootballDbModel.Player">
               <MappingFragment StoreEntitySet="Player">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -177,7 +180,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Team">
+          <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="FootballDbModel.Team">
               <MappingFragment StoreEntitySet="Team">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -203,7 +206,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

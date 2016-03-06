@@ -14,7 +14,7 @@ namespace SimlyFooball.Controllers
         // GET: Teams
         public ActionResult Index()
         {
-            return View(_teamRepository.GetListOfAllTeams());
+            return View(_teamRepository.GetAll());
         }
 
         // GET: Teams/Details/5
@@ -24,7 +24,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = _teamRepository.GetTeamById(id.Value);
+            Team team = _teamRepository.GetById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -47,7 +47,7 @@ namespace SimlyFooball.Controllers
         {
             if (ModelState.IsValid)
             {
-                _teamRepository.AddNewTeam(team);
+                _teamRepository.Add(team);
                 return RedirectToAction("Index");
             }
 
@@ -61,7 +61,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-          Team team = _teamRepository.GetTeamById(id.Value);
+          Team team = _teamRepository.GetById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace SimlyFooball.Controllers
         {
             if (ModelState.IsValid)
             {
-                _teamRepository.SaveChangesInTeam(team);
+                _teamRepository.Update(team);
                 return RedirectToAction("Index");
             }
             return View(team);
@@ -91,7 +91,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = _teamRepository.GetTeamById(id.Value);
+            Team team = _teamRepository.GetById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -104,7 +104,7 @@ namespace SimlyFooball.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            _teamRepository.RemoveTeam(id);
+            _teamRepository.Remove(id);
             return RedirectToAction("Index");
         }
 

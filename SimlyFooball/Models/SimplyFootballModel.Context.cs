@@ -25,8 +25,8 @@ namespace SimlyFooball.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<EmployeesInClub> EmployeesInClub { get; set; }
-        public virtual DbSet<Player> Player { get; set; }
-        public virtual DbSet<Team> Team { get; set; }
+        public virtual DbSet<Contract> Contracts { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
     }
 }

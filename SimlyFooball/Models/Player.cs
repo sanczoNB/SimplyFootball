@@ -16,7 +16,7 @@ namespace SimlyFooball.Models
     {
         public Player()
         {
-            this.EmployeesInClub = new HashSet<EmployeesInClub>();
+            this.Contracts = new HashSet<Contract>();
         }
     
         public long Id { get; set; }
@@ -25,6 +25,6 @@ namespace SimlyFooball.Models
         public System.DateTime BirthDate { get; set; }
         public string Position { get; set; }
     
-        public virtual ICollection<EmployeesInClub> EmployeesInClub { get; set; }
+        public virtual ICollection<Contract> Contracts { get; set; }
     }
 }

@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using SimlyFooball.DataAccess;
 using SimlyFooball.Models;
 
 namespace SimlyFooball.Controllers
 {
-    public class EmployeesInClubsController : Controller
+    public class ContractController : Controller
     {
-        private FootballDbEntities db = new FootballDbEntities();
+
+        private readonly ITeamRepository _teamRepository = new TeamRepository();
+
+        private readonly IPlayerRepository _playerRepository = new PlayerRepository();
+        
+        private readonly IContractRepository _contractRepository = new ContractRepository();
 
         // GET: EmployeesInClubs
         public ActionResult Index()
         {
-            var employeesInClub = db.EmployeesInClub.Include(e => e.Player).Include(e => e.Team);
-            return View(employeesInClub.ToList());
+          var employeesInClub = _contractRepository.GetAll().ToList();
+            return View(employeesInClub);
         }
 
         // GET: EmployeesInClubs/Details/5
@@ -28,7 +30,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmployeesInClub employeesInClub = db.EmployeesInClub.Find(id);
+            Contract employeesInClub = _contractRepository.GetById(id.Value);
             if (employeesInClub == null)
             {
                 return HttpNotFound();
@@ -39,8 +41,8 @@ namespace SimlyFooball.Controllers
         // GET: EmployeesInClubs/Create
         public ActionResult Create()
         {
-            ViewBag.PlayerId = new SelectList(db.Player, "Id", "FirstName");
-            ViewBag.TeamId = new SelectList(db.Team, "Id", "FullName");
+            ViewBag.PlayerId = new SelectList(_playerRepository.GetAviable(), "Id", "FirstName");
+            ViewBag.TeamId = new SelectList(_teamRepository.GetAll(), "Id", "FullName");
             return View();
         }
 
@@ -49,17 +51,16 @@ namespace SimlyFooball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeamId,PlayerId,Salary,SignDate")] EmployeesInClub employeesInClub)
+        public ActionResult Create([Bind(Include = "TeamId,PlayerId,Salary,SignDate")] Contract employeesInClub)
         {
             if (ModelState.IsValid)
             {
-                db.EmployeesInClub.Add(employeesInClub);
-                db.SaveChanges();
+                _contractRepository.Add(employeesInClub);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PlayerId = new SelectList(db.Player, "Id", "FirstName", employeesInClub.PlayerId);
-            ViewBag.TeamId = new SelectList(db.Team, "Id", "FullName", employeesInClub.TeamId);
+            ViewBag.PlayerId = new SelectList(_playerRepository.GetAviable(), "Id", "FirstName", employeesInClub.PlayerId);
+            ViewBag.TeamId = new SelectList(_teamRepository.GetAll(), "Id", "FullName", employeesInClub.TeamId);
             return View(employeesInClub);
         }
 
@@ -70,13 +71,13 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmployeesInClub employeesInClub = db.EmployeesInClub.Find(id);
+            Contract employeesInClub = _contractRepository.GetById(id.Value);
             if (employeesInClub == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PlayerId = new SelectList(db.Player, "Id", "FirstName", employeesInClub.PlayerId);
-            ViewBag.TeamId = new SelectList(db.Team, "Id", "FullName", employeesInClub.TeamId);
+            ViewBag.PlayerId = new SelectList(_playerRepository.GetAviable(), "Id", "FirstName", employeesInClub.PlayerId);
+            ViewBag.TeamId = new SelectList(_teamRepository.GetAll(), "Id", "FullName", employeesInClub.TeamId);
             return View(employeesInClub);
         }
 
@@ -85,16 +86,15 @@ namespace SimlyFooball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TeamId,PlayerId,Salary,SignDate")] EmployeesInClub employeesInClub)
+        public ActionResult Edit([Bind(Include = "TeamId,PlayerId,Salary,SignDate")] Contract employeesInClub)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employeesInClub).State = EntityState.Modified;
-                db.SaveChanges();
+                _contractRepository.Update(employeesInClub);
                 return RedirectToAction("Index");
             }
-            ViewBag.PlayerId = new SelectList(db.Player, "Id", "FirstName", employeesInClub.PlayerId);
-            ViewBag.TeamId = new SelectList(db.Team, "Id", "FullName", employeesInClub.TeamId);
+            ViewBag.PlayerId = new SelectList(_playerRepository.GetAviable(), "Id", "FirstName", employeesInClub.PlayerId);
+            ViewBag.TeamId = new SelectList(_teamRepository.GetAll(), "Id", "FullName", employeesInClub.TeamId);
             return View(employeesInClub);
         }
 
@@ -105,7 +105,7 @@ namespace SimlyFooball.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmployeesInClub employeesInClub = db.EmployeesInClub.Find(id);
+            Contract employeesInClub = _contractRepository.GetById(id.Value);
             if (employeesInClub == null)
             {
                 return HttpNotFound();
@@ -118,9 +118,7 @@ namespace SimlyFooball.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            EmployeesInClub employeesInClub = db.EmployeesInClub.Find(id);
-            db.EmployeesInClub.Remove(employeesInClub);
-            db.SaveChanges();
+            _contractRepository.Remove(id);
             return RedirectToAction("Index");
         }
 
@@ -128,7 +126,7 @@ namespace SimlyFooball.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _contractRepository.Dispose();
             }
             base.Dispose(disposing);
         }
