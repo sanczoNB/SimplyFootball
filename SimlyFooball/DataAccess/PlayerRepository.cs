@@ -7,7 +7,7 @@ using SimlyFooball.Models;
 
 namespace SimlyFooball.DataAccess
 {
-  public class PlayerRepository
+  public class PlayerRepository : IPlayerRepository
   {
 
     private readonly FootballDbEntities _db = new FootballDbEntities();
