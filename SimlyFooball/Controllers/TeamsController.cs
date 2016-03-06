@@ -47,6 +47,7 @@ namespace SimlyFooball.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 _teamRepository.Add(team);
                 return RedirectToAction("Index");
             }

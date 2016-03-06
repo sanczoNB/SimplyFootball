@@ -24,7 +24,7 @@ namespace SimlyFooball.Models
         public string NickName { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public System.DateTime FondDate { get; set; }
+        public int FoundYear { get; set; }
     
         public virtual ICollection<Contract> Contracts { get; set; }
     }
