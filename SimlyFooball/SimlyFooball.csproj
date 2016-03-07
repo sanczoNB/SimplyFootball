@@ -203,6 +203,7 @@
     <Compile Include="Models\Team.cs">
       <DependentUpon>SimplyFootballModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TeamValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -294,6 +295,8 @@
     <Content Include="Views\Contract\Details.cshtml" />
     <Content Include="Views\Contract\Edit.cshtml" />
     <Content Include="Views\Contract\Index.cshtml" />
+    <Content Include="Views\Players\DeleteNotAviable.cshtml" />
+    <Content Include="Views\Teams\DeleteNotAviable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

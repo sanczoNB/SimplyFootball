@@ -7,12 +7,12 @@
     <Schema Namespace="FootballDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Contract">
           <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeamId" Type="bigint" Nullable="false" />
           <Property Name="PlayerId" Type="bigint" Nullable="false" />
-          <Property Name="Salary" Type="money" Nullable="false" />
+          <Property Name="Salary" Type="bigint" Nullable="false" />
           <Property Name="StartContractDate" Type="date" Nullable="false" />
           <Property Name="EndContractDate" Type="date" />
         </EntityType>
@@ -80,16 +80,16 @@
       <Schema Namespace="FootballDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Contract">
           <Key>
-            <PropertyRef Name="TeamId" />
-            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="TeamId" Type="Int64" Nullable="false" />
           <Property Name="PlayerId" Type="Int64" Nullable="false" />
-          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Salary" Type="Int64" Nullable="false" />
           <Property Name="StartContractDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndContractDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Player" Relationship="Self.FK_EmployeesInClub_Player" FromRole="Contract" ToRole="Player" />
           <NavigationProperty Name="Team" Relationship="Self.FK_EmployeesInClub_Team" FromRole="Contract" ToRole="Team" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -160,6 +160,7 @@
           <EntitySetMapping Name="Contracts">
             <EntityTypeMapping TypeName="FootballDbModel.Contract">
               <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
                 <ScalarProperty Name="Salary" ColumnName="Salary" />

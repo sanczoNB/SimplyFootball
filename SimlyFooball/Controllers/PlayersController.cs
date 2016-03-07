@@ -97,6 +97,10 @@ namespace SimlyFooball.Controllers
             {
                 return HttpNotFound();
             }
+          if (player.Contracts.Count != 0)
+          {
+            return View("DeleteNotAviable");
+          }
             return View(player);
         }
 

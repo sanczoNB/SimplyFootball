@@ -16,9 +16,10 @@ namespace SimlyFooball.Models
     {
         public long TeamId { get; set; }
         public long PlayerId { get; set; }
-        public decimal Salary { get; set; }
+        public long Salary { get; set; }
         public System.DateTime StartContractDate { get; set; }
         public Nullable<System.DateTime> EndContractDate { get; set; }
+        public long Id { get; set; }
     
         public virtual Player Player { get; set; }
         public virtual Team Team { get; set; }

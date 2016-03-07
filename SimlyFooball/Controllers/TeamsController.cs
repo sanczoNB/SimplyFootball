@@ -43,7 +43,7 @@ namespace SimlyFooball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FullName,NickName,Country,City,FondDate")] Team team)
+        public ActionResult Create([Bind(Include = "Id,FullName,NickName,Country,City,FoundYear")] Team team)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace SimlyFooball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FullName,NickName,Country,City,FondDate")] Team team)
+        public ActionResult Edit([Bind(Include = "Id,FullName,NickName,Country,City,FoundYear")] Team team)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +97,10 @@ namespace SimlyFooball.Controllers
             {
                 return HttpNotFound();
             }
+          if (team.Contracts.Count != 0)
+          {
+            return View("DeleteNotAviable");
+          }
             return View(team);
         }
 

@@ -48,7 +48,7 @@ namespace SimlyFooball.DataAccess
 
     public List<Player> GetAviable()
     {
-      return _db.Players.Where(p => p.Contracts.All(c => c.StartContractDate != null)).ToList();
+      return _db.Players.Where(p => p.Contracts.All(c => c.EndContractDate != null)).ToList();
     }
   }
 }

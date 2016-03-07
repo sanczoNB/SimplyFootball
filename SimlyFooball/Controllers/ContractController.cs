@@ -51,7 +51,7 @@ namespace SimlyFooball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeamId,PlayerId,Salary,SignDate")] Contract employeesInClub)
+        public ActionResult Create([Bind(Include = "TeamId,PlayerId,Salary,StartContractDate")] Contract employeesInClub)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace SimlyFooball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TeamId,PlayerId,Salary,SignDate")] Contract employeesInClub)
+        public ActionResult Edit([Bind(Include = "Id,TeamId,PlayerId,Salary,StartContractDate,EndContractDate")] Contract employeesInClub)
         {
             if (ModelState.IsValid)
             {
