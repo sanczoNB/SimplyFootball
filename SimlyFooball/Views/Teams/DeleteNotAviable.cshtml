@@ -1,0 +1,22 @@
+﻿@{
+  ViewBag.Title = "DeleteNotAviable";
+}
+
+<h2>Przykro nam </h2>
+
+<h3>Istnieją kontrakty dotyczace tego klubu, nie moze on zostać usuniety</h3>
+
+
+
+
+
+
+@using (Html.BeginForm())
+{
+  @Html.AntiForgeryToken()
+
+  <div class="form-actions no-color">
+    @Html.ActionLink("Powrót", "Index")
+  </div>
+}
+
